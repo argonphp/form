@@ -1,0 +1,12 @@
+@extends('ArgonForm::layout.form')
+
+@section('content')
+
+%fields%
+
+@endsection
+
+@section('buttons')
+	<input type="submit" name="submit" value="SALVAR" class="btn btn-primary">
+	<a class="btn btn-primary" href="{{ route('%indexRoute%') }}">CANCELAR</a>
+@endsection	
