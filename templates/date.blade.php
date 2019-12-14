@@ -18,9 +18,14 @@
 			placeholder="{{ $placeholder ?? "" }}"
 			@isset ($readOnly) readonly @endisset
 			>
-			
+		
 	</div>
-	
+
+	@error($name)
+		<div class="invalid-feedback" style="display: block">
+    		{{ $message }}
+    	</div>
+    @enderror
 
 </div>
 
