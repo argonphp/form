@@ -3,11 +3,13 @@
 Os dados virão sob o nome $name, por que esta é a variavel padrão
 aceita como primeiro parametro do construtor, fiz assim para criar 
 uma sintaxe mais limpo.
+
 --}}
+
 <?php
-// Trocamos o nome $name por $data, que faz muito mais sentido.
-//$data = $name;
-//unset($name);
+
+$actions = $actions ?? true;
+
 ?>
 
 <table id="{{ $id }}" class="dataTable table table-hover table-bordered" width="100%">
@@ -16,7 +18,9 @@ uma sintaxe mais limpo.
 		@foreach ($name[0] as $colName => $d)
 			<td>{{ $colName }}</td>
 		@endforeach
-		<td class="actions">Ações</td>
+		<?php if ($actions): ?>
+      <td class="actions">Ações</td>
+    <?php endif; ?>
 	</tr>
 </thead>
 <tbody>
@@ -25,17 +29,19 @@ uma sintaxe mais limpo.
 			@foreach ($row as $col)
 				<td>{{ $col }}</td>
 			@endforeach
-			<td class="actions">
-				<center>
-          <button class="btn btn-primary btn-sm buttons-delete" type="submit">
-            <i class="fa fa-trash"></i>
-          </button>
+			<?php if ($actions): ?>
+        <td class="actions">
+  				<center>
+            <button class="btn btn-primary btn-sm buttons-delete" type="submit">
+              <i class="fa fa-trash"></i>
+            </button>
 
-          <button class="btn btn-primary btn-sm buttons-edit">
-            <i class="fa fa-pencil"></i>
-          </button>
-				</center>
-			</td>
+            <button class="btn btn-primary btn-sm buttons-edit">
+              <i class="fa fa-pencil"></i>
+            </button>
+  				</center>
+  			</td>
+      <?php endif; ?>
 		</tr>
 	@endforeach
 </tbody>
@@ -198,16 +204,20 @@ uma sintaxe mais limpo.
         }
         });
 
-        $("td.actions button.buttons-delete").attr('title', 'Remove o registro');
-        $("td.actions button.buttons-edit").attr('title', 'Edita o registro');
-        $("td.actions button").tooltip();
+        <?php if ($actions): ?>
+          $("td.actions button.buttons-delete").attr('title', 'Remove o registro');
+          $("td.actions button.buttons-edit").attr('title', 'Edita o registro');
+          $("td.actions button").tooltip();
+        <?php endif; ?>
 
         // Search input tooltip
         $('div.dataTables_filter input', table.table().container()).attr('title', 'Caixa de pesquisa<br>(Ctrl+Alt+P)');
         $('div.dataTables_filter input', table.table().container()).tooltip();
 
         // Buttons Tooltip
+        <?php if ($actions): ?>
         $('button.buttons-new',table.table().container()).attr('title', 'Novo registro<br>(Ctrl+Alt+N)');
+        <?php endif; ?>
         $('button.buttons-page-length',table.table().container()).attr('title', 'Resultados por página<br>(Ctrl+Alt+[+/-])');
         $('button.buttons-colvis',table.table().container()).attr('title', 'Colunas visíveis<br>(Ctrl+Alt+[1-9])');
         $('button.buttons-excel',table.table().container()).attr('title', 'Exportar para o excel<br>(Ctrl+Alt+E)');
@@ -225,7 +235,9 @@ uma sintaxe mais limpo.
           order: [],
 
           buttons: [
-          {text: "<i class=\"fa fa-plus\" aria-hidden=\"true\"></i>", className: "buttons-new"},
+          <?php if ($actions): ?>
+            {text: "<i class=\"fa fa-plus\" aria-hidden=\"true\"></i>", className: "buttons-new"},
+          <?php endif; ?>
           {extend: 'pageLength', text: "<i class=\"fa fa-list-ol\" aria-hidden=\"true\"></i>"},
           {extend: 'colvis', text: "<i class=\"fa fa-columns\" aria-hidden=\"true\"></i>"}, 
           {extend: 'excel', text: "<i class=\"fa fa-file-excel-o\" aria-hidden=\"true\"></i>", exportOptions: { columns: ':visible' }}, 
@@ -264,15 +276,6 @@ uma sintaxe mais limpo.
           }
         } 
       );
-      
-
-      
-
-
-
-
-
-      // table.button(4).text('a');
 
 
       } );
